@@ -166,10 +166,10 @@ int RTC_hours, RTC_minutes, RTC_seconds, RTC_day, RTC_month, RTC_year, RTC_day_o
 //-------------------------------0--------1--------2-------3--------4--------5--------6--------7--------8--------9----------10-------11---------12---------13-------14-------15---------16---------17--------18----------19
 //                     names:  Time,   Date,   Alarm,   12/24, Temperature,TimeZone,hours,   mintues, seconds, DateFormat, day,    month,   year,      hour,   minute,   second alarm01  hour_format Deg.FormIndex HoursOffset
 //                               1        1        1       1        1        1        1        1        1        1          1        1          1          1        1        1        1            1         1        1
-int parent[SettingsCount] = {NoParent, NoParent, NoParent, NoParent, NoParent, NoParent, 1,       1,       1,       2,         2,       2,         2,         3,       3,       3,       3,       4,           5,        6};
+int parent[SettingsCount] = {NoParent, NoParent, NoParent, NoParent, NoParent, NoParent, 1,    1,       1,       2,         2,       2,         2,         3,       3,       3,       3,       4,           5,        6};
 int firstChild[SettingsCount] = {6,       9,       13,     17,      18,      19,      0,       0,       0,    NoChild,      0,       0,         0,         0,       0,       0,       0,       0,           0,        0};
 int lastChild[SettingsCount] = { 8,      12,       16,     17,      18,      19,      0,       0,       0,    NoChild,      0,       0,         0,         0,       0,       0,       0,       0,           0,        0};
-int value[SettingsCount] = {     0,       0,       0,      0,       0,       0,       0,       0,       0,  US_DateFormat,  0,       0,         0,         0,       0,       0,       0,       24,          0,        2};
+int value[SettingsCount] = {     0,       0,       0,      0,       0,       0,       0,       0,       0,  US_DateFormat,  0,       0,         0,         0,       0,       0,       0,       12,     FAHRENHEIT,    2};
 int maxValue[SettingsCount] = {  0,       0,       0,      0,       0,       0,       23,      59,      59, US_DateFormat,  31,      12,        99,       23,      59,      59,       1,       24,     FAHRENHEIT,    14};
 int minValue[SettingsCount] = {  0,       0,       0,      12,      0,       0,       00,      00,      00, EU_DateFormat,  1,       1,         00,       00,      00,      00,       0,       12,      CELSIUS,     -12};
 int blinkPattern[SettingsCount] = {
@@ -229,8 +229,6 @@ int fireforks[] = {0, 0, 1, //1
                    1, 0, 0, //5
                    0, -1, 0
                   }; //array with RGB rules (0 - do nothing, -1 - decrese, +1 - increse
-
-
 
 int functionDownButton = 0;
 int functionUpButton = 0;
@@ -394,6 +392,10 @@ void setup()
     }
   }
   setTime(RTC_hours, RTC_minutes, RTC_seconds, RTC_day, RTC_month, RTC_year);
+
+  analogWrite(RedLedPin,0);
+  analogWrite(GreenLedPin,0);
+  analogWrite(BlueLedPin,0);
 
   startupTubes();
 
@@ -846,6 +848,7 @@ void setRTCDateTime(byte h, byte m, byte s, byte d, byte mon, byte y, byte w)
 
 void getRTCTime()
 {
+  // I think the chip actually being used is DS3231, with an internal crystal. It has the same address, 0x68
   Wire.beginTransmission(DS1307_ADDRESS);
   Wire.write(zero);
   Wire.endTransmission();
