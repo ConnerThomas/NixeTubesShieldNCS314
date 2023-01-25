@@ -1,14 +1,17 @@
 # Nixe Tubes Shield NCS314-6
 Heavily modified version of GRA-AFCH's original Nixie Clock Shield code.  <br>
 
-Main changes: <br>
+# Main changes: <br>
 	Added smooth fading to digit transitions based on work done by vasques666 on the gra-afch forums (thank you!) <br>
-	Removed IR, GPS, and Tone code. Removed Aarm function. May add this back later. <br>
+
+	Removed IR, GPS, and Tone code. Removed Alarm function. May add this back later. <br>
+	
 	Reorganized code to be more c++ compliant. Added function prototypes and renamed some things. <br>
 
-TODO:
-	Separate out common functions into a libaray to keep main.cpp cleaner
-	Add a sleep function to dim the display or not use the digits between configurable hours
+# TODO: <br>
+	Separate out common functions into a libaray to keep main.cpp cleaner <br>
+
+	Add a sleep function to dim the display or not use the digits between configurable hours <br>
 
 1. This repository content sources of project for Nixie Clock developed by GRA & AFCH.
 
